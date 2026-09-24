@@ -1,0 +1,28 @@
+:root,
+:root[data-shape="soft"] {
+  --radius-button: 8px;
+  --radius-input: 8px;
+  --radius-card: 10px;
+  --radius-badge: 7px;
+}
+
+:root[data-shape="square"] {
+  --radius-button: 3px;
+  --radius-input: 2px;
+  --radius-card: 4px;
+  --radius-badge: 2px;
+}
+
+:root[data-shape="rounded"] {
+  --radius-button: 14px;
+  --radius-input: 12px;
+  --radius-card: 16px;
+  --radius-badge: 12px;
+}
+
+:root[data-shape="pill"] {
+  --radius-button: 999px;
+  --radius-input: 999px;
+  --radius-card: 999px;
+  --radius-badge: 999px;
+}

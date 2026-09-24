@@ -1,0 +1,44 @@
+:root {
+  color-scheme: light;
+
+  --color-accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --color-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 6%));
+  --color-accent-active: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 12%));
+  --color-on-accent: var(--gray-50);
+
+  --color-primary: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
+  --color-primary-hover: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 6%));
+  --color-primary-active: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 12%));
+  --color-on-primary: var(--gray-50);
+
+  --color-secondary: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-l));
+  --color-secondary-hover: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) - 6%));
+  --color-secondary-active: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) - 12%));
+  --color-on-secondary: var(--gray-50);
+
+  --color-surface: var(--gray-50);
+  --color-surface-raised: #ffffff;
+  --color-border: var(--gray-200);
+  --color-text: var(--gray-900);
+  --color-text-muted: var(--gray-500);
+  --color-bg: var(--gray-100);
+  --color-scrim: color-mix(in srgb, black 50%, transparent);
+
+  /*
+   * Persistent selected/active state, for items that stay marked as
+   * "currently selected" (e.g. the active Sidebar nav item, the active Tab).
+   * Interaction-mode-INDEPENDENT on purpose: selection is a stable state,
+   * not a transient gesture, so it must stay visible in every
+   * [data-interaction] mode — unlike --state-layer-*, which resolves to
+   * transparent in "glow".
+   */
+  --color-selected-bg: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  --color-selected-text: var(--color-accent);
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+}

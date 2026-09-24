@@ -1,0 +1,40 @@
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-accent: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 4%));
+  --color-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 10%));
+  --color-accent-active: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 4%));
+  --color-on-accent: var(--gray-900);
+
+  --color-primary: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) + 4%));
+  --color-primary-hover: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) + 10%));
+  --color-primary-active: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 4%));
+  --color-on-primary: var(--gray-900);
+
+  --color-secondary: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) + 4%));
+  --color-secondary-hover: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) + 10%));
+  --color-secondary-active: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) - 4%));
+  --color-on-secondary: var(--gray-900);
+
+  --color-surface: var(--gray-800);
+  /*
+   * Deep near-black navy (not a neutral gray step): the reference design
+   * shows raised/card surfaces darker than the base surface in dark mode,
+   * with a subtle blue tint. A literal is used here, mirroring how light
+   * mode defines --color-surface-raised as #ffffff.
+   */
+  --color-surface-raised: #10131c;
+  --color-border: var(--gray-600);
+  --color-text: var(--gray-50);
+  --color-text-muted: var(--gray-400);
+  --color-bg: var(--gray-900);
+
+  /*
+   * Persistent selected/active state (see theme.css). --color-accent is
+   * already re-tuned for dark here, so the mix adapts; the opacity is
+   * raised slightly because a 12% accent tint over a near-black surface
+   * reads fainter than over the light surface.
+   */
+  --color-selected-bg: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  --color-selected-text: var(--color-accent);
+}

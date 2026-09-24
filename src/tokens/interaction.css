@@ -1,0 +1,49 @@
+/*
+ * Two interaction styles, toggled via [data-interaction] on :root:
+ * - "glow" (default): Tailwind/Radix-style external focus halo, drawn
+ *   outside the element border via box-shadow. No internal state fill.
+ * - "material": Material Design 3 state-layer opacities, an internal
+ *   fill on hover/focus/press/drag, with a ripple on click and no
+ *   external focus halo.
+ * These are meant to be compared live via a UI toggle (later playground task).
+ * The playground FAB consumes --interaction-preview-bg so the active mode is
+ * visible at rest, without needing a hover/focus interaction to perceive it.
+ */
+
+:root,
+:root[data-interaction="glow"] {
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  /* Mouse-hover counterpart to --focus-ring: lighter/thinner so the two read as
+   * distinct, and usable on :hover (focus-ring stays keyboard-only). */
+  --hover-ring: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent);
+
+  --state-layer-hover: transparent;
+  --state-layer-focus: transparent;
+  --state-layer-pressed: transparent;
+  --state-layer-dragged: transparent;
+
+  /* Always-visible mode indicator: transparent fill = outlined swatch. */
+  --interaction-preview-bg: transparent;
+
+  --ripple-duration: 0ms;
+  --ripple-easing: linear;
+  --ripple-color: transparent;
+}
+
+:root[data-interaction="material"] {
+  --focus-ring: 0 0 0 0 transparent;
+  /* Material relies on the internal state-layer fill, not an external ring. */
+  --hover-ring: 0 0 0 0 transparent;
+
+  --state-layer-hover: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  --state-layer-focus: color-mix(in srgb, var(--color-accent) 20%, transparent);
+  --state-layer-pressed: color-mix(in srgb, var(--color-accent) 24%, transparent);
+  --state-layer-dragged: color-mix(in srgb, var(--color-accent) 24%, transparent);
+
+  /* Always-visible mode indicator: saturated tinted fill. */
+  --interaction-preview-bg: color-mix(in srgb, var(--color-accent) 45%, transparent);
+
+  --ripple-duration: 450ms;
+  --ripple-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --ripple-color: color-mix(in srgb, var(--color-accent) 24%, transparent);
+}

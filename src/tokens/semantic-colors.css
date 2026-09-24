@@ -1,0 +1,11 @@
+:root {
+  --color-positive: #1a9c38;
+  --color-negative: #c10015;
+  --color-warning: #f2c037;
+  --color-info: #31ccec;
+
+  --color-positive-bg: color-mix(in srgb, var(--color-positive) 12%, transparent);
+  --color-negative-bg: color-mix(in srgb, var(--color-negative) 12%, transparent);
+  --color-warning-bg: color-mix(in srgb, var(--color-warning) 12%, transparent);
+  --color-info-bg: color-mix(in srgb, var(--color-info) 12%, transparent);
+}
