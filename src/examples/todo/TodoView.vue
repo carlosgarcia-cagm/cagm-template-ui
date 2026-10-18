@@ -572,9 +572,9 @@ function cancelEdit() {
   align-items: center;
   gap: 0.125rem;
   padding: 0.125rem;
-  border: 1px solid var(--color-border);
+  border: var(--surface-border-width) solid var(--surface-border-color);
   border-radius: var(--radius-button);
-  background: var(--color-surface);
+  background: var(--surface-tonal-bg);
   flex-shrink: 0;
 }
 

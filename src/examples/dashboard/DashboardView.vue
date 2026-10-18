@@ -587,7 +587,8 @@ function openDetails(row: EntryRow) {
 }
 
 .entries__table-wrap {
-  border: 1px solid var(--color-border);
+  border: var(--surface-border-width) solid var(--surface-border-color);
+  background: var(--surface-tonal-bg);
   border-radius: var(--radius-card);
   overflow-x: auto;
 }
@@ -599,7 +600,7 @@ function openDetails(row: EntryRow) {
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   background: var(--color-selected-bg);
-  border: 1px solid var(--color-border);
+  border: var(--surface-border-width) solid var(--surface-border-color);
   border-radius: var(--radius-button);
 }
 

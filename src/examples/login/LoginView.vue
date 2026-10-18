@@ -140,9 +140,9 @@ const activeShell = computed<Component>(() =>
   display: flex;
   gap: 0.25rem;
   padding: 0.25rem;
-  border: 1px solid var(--color-border);
+  border: var(--surface-border-width) solid var(--surface-border-color);
   border-radius: calc(var(--radius-button) + 0.25rem);
-  background: color-mix(in srgb, var(--color-surface-raised) 88%, transparent);
+  background: color-mix(in srgb, var(--surface-tonal-bg) 88%, transparent);
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(6px);
 }
@@ -300,7 +300,8 @@ const activeShell = computed<Component>(() =>
 @media (max-width: 900px) {
   .login-split {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto;
+    min-height: auto;
   }
 
   .login-split :deep(.login-split__brand) {

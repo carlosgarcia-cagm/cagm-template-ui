@@ -81,7 +81,7 @@ const sparkPath = computed(() => toLinePath(props.points, SPARK_WIDTH, SPARK_HEI
   display: grid;
   gap: 0.5rem;
   padding: 1.25rem;
-  background: var(--color-surface-raised);
+  background: var(--color-card-elevated);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-sm);
   font-family: var(--font-body);
