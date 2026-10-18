@@ -4,37 +4,70 @@
   --color-accent: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 4%));
   --color-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 10%));
   --color-accent-active: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 4%));
-  --color-on-accent: var(--gray-900);
+  --color-on-accent: var(--accent-on-dark, var(--gray-900));
+  /*
+   * Dark surfaces need a LIGHT shade of the brand color for text, so the
+   * text-safe tokens swap to the dark-mode lightness computed in useTheme.ts.
+   * The 100..900 scale itself is inherited unchanged from theme.css.
+   */
+  --color-accent-text: hsl(var(--accent-h) var(--accent-s) var(--accent-text-dark-l, 95%));
 
   --color-primary: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) + 4%));
   --color-primary-hover: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) + 10%));
   --color-primary-active: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 4%));
-  --color-on-primary: var(--gray-900);
+  --color-on-primary: var(--primary-on-dark, var(--gray-900));
+  --color-primary-text: hsl(var(--primary-h) var(--primary-s) var(--primary-text-dark-l, 95%));
 
   --color-secondary: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) + 4%));
   --color-secondary-hover: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) + 10%));
   --color-secondary-active: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) - 4%));
-  --color-on-secondary: var(--gray-900);
+  --color-on-secondary: var(--secondary-on-dark, var(--gray-900));
+  --color-secondary-text: hsl(
+    var(--secondary-h) var(--secondary-s) var(--secondary-text-dark-l, 95%)
+  );
 
   --color-surface: var(--gray-800);
   /*
-   * Deep near-black navy (not a neutral gray step): the reference design
-   * shows raised/card surfaces darker than the base surface in dark mode,
-   * with a subtle blue tint. A literal is used here, mirroring how light
-   * mode defines --color-surface-raised as #ffffff.
+   * --color-surface-raised: general small-surface elevation (badges,
+   * popovers, modals, etc.). Per Material's elevation-via-lightening
+   * convention in dark mode, this must read as LIGHTER/more prominent
+   * than the base surfaces (--color-surface/--gray-800 and
+   * --color-bg/--gray-900), not darker. The deep-navy "hero card" tone
+   * previously put here has been moved to --color-card-elevated below.
    */
-  --color-surface-raised: #10131c;
+  --color-surface-raised: var(--gray-700);
+  /*
+   * --color-card-elevated: the deep near-black navy with a subtle blue
+   * tint, used specifically for large hero/KPI cards that want the dark
+   * "darker than the surface" aesthetic. A literal is used here, mirroring
+   * how light mode defines --color-card-elevated as #ffffff. Intentionally
+   * darker than --color-bg in dark mode — DO NOT use this for badges,
+   * popovers, or other small raised surfaces; use --color-surface-raised
+   * for those.
+   */
+  --color-card-elevated: #10131c;
   --color-border: var(--gray-600);
   --color-text: var(--gray-50);
   --color-text-muted: var(--gray-400);
   --color-bg: var(--gray-900);
 
   /*
-   * Persistent selected/active state (see theme.css). --color-accent is
+   * Persistent selected/active state (see theme.css). --color-primary is
    * already re-tuned for dark here, so the mix adapts; the opacity is
-   * raised slightly because a 12% accent tint over a near-black surface
+   * raised slightly because a 12% primary tint over a near-black surface
    * reads fainter than over the light surface.
    */
-  --color-selected-bg: color-mix(in srgb, var(--color-accent) 20%, transparent);
-  --color-selected-text: var(--color-accent);
+  --color-selected-bg: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  --color-selected-text: var(--color-primary);
+
+  /*
+   * Dark-mode text-safe semantic variants: the light-mode tokens in
+   * semantic-colors.css are too dark against dark surfaces, so these are
+   * lightened to keep WCAG AA (4.5:1) for TEXT usage. Bright hue tokens
+   * remain unchanged for fills/dots/strokes.
+   */
+  --color-positive-text: #4ade80;
+  --color-negative-text: #f87171;
+  --color-warning-text: #fbbf24;
+  --color-info-text: #67e8f9;
 }

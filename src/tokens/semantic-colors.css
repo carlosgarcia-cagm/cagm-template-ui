@@ -8,4 +8,15 @@
   --color-negative-bg: color-mix(in srgb, var(--color-negative) 12%, transparent);
   --color-warning-bg: color-mix(in srgb, var(--color-warning) 12%, transparent);
   --color-info-bg: color-mix(in srgb, var(--color-info) 12%, transparent);
+
+  /*
+   * Text-safe semantic variants: tuned to meet WCAG AA (4.5:1) when used as
+   * TEXT against light surfaces. The bright hue tokens above stay unchanged
+   * and are still the right choice for fills/dots/strokes. Dark-mode
+   * overrides live in theme-dark.css.
+   */
+  --color-positive-text: #107a2e;
+  --color-negative-text: #b00020;
+  --color-warning-text: #8a5a00;
+  --color-info-text: #0e6b7d;
 }

@@ -1,0 +1,191 @@
+/*
+ * Surface style axis, toggled via [data-surface] on :root:
+ * - "flat" (default, no attribute): Material 3 tonal-elevation style —
+ *   surfaces differentiated by a subtle secondary tint, no visible border line.
+ * - "outlined": a visible 1px border on a flat surface background, the
+ *   traditional "panel on a panel" look.
+ * - "filled": Material 3's third button/field variant — solid tonal fill
+ *   (stronger secondary tint than flat), no border.
+ * These are meant to be compared live via a UI toggle (ThemeMatrixDialog).
+ * Components consume --surface-border-width / --surface-border-color /
+ * --surface-tonal-bg.
+ *
+ * PER-COMPONENT-CATEGORY OVERRIDES:
+ * Six component categories (button, card, input, dropdown, modal, badge) can
+ * OPTIONALLY opt out of the global axis via a corresponding
+ * [data-surface-<category>] attribute on :root. When set, it overrides the
+ * global axis for that category only via the per-category custom properties
+ * (--surface-border-width-button, etc.). When ABSENT, those per-category
+ * properties fall back to the global axis values, so components reading
+ * the per-category variable always get a sensible default and category-
+ * level overrides "just work" without changing component code.
+ */
+
+:root,
+:root[data-surface="flat"] {
+  --surface-border-width: 0px;
+  --surface-border-color: transparent;
+  --surface-tonal-bg: color-mix(in srgb, var(--color-secondary) 4%, var(--color-surface));
+}
+
+:root[data-surface="outlined"] {
+  --surface-border-width: 1px;
+  --surface-border-color: var(--color-border);
+  --surface-tonal-bg: var(--color-surface);
+}
+
+:root[data-surface="filled"] {
+  --surface-border-width: 0px;
+  --surface-border-color: transparent;
+  --surface-tonal-bg: color-mix(in srgb, var(--color-secondary) 12%, var(--color-surface));
+}
+
+/*
+ * Per-component-category defaults: when the category's [data-surface-<cat>]
+ * attribute is absent on :root, the per-category properties fall back to
+ * the global axis values via var(--surface-*) refs. Cascade order below
+ * (more-specific per-category rules) overrides these when the attribute
+ * is explicitly set.
+ */
+
+:root {
+  /*
+   * Floating/popover surface tint: a slightly lower-opacity secondary tint than
+   * the generic "filled" tint (12%), intended for surfaces that float above
+   * other content (Dropdown, Popover) where the full tint reads "muddy".
+   * Standalone token — not part of the per-category override axis.
+   */
+  --surface-tonal-bg-overlay: color-mix(in srgb, var(--color-secondary) 8%, var(--color-surface));
+
+  --surface-border-width-button: var(--surface-border-width);
+  --surface-border-color-button: var(--surface-border-color);
+  --surface-tonal-bg-button: var(--surface-tonal-bg);
+
+  --surface-border-width-card: var(--surface-border-width);
+  --surface-border-color-card: var(--surface-border-color);
+  --surface-tonal-bg-card: var(--surface-tonal-bg);
+
+  --surface-border-width-input: var(--surface-border-width);
+  --surface-border-color-input: var(--surface-border-color);
+  --surface-tonal-bg-input: var(--surface-tonal-bg);
+
+  --surface-border-width-dropdown: var(--surface-border-width);
+  --surface-border-color-dropdown: var(--surface-border-color);
+  --surface-tonal-bg-dropdown: var(--surface-tonal-bg);
+
+  --surface-border-width-modal: var(--surface-border-width);
+  --surface-border-color-modal: var(--surface-border-color);
+  --surface-tonal-bg-modal: var(--surface-tonal-bg);
+
+  --surface-border-width-badge: var(--surface-border-width);
+  --surface-border-color-badge: var(--surface-border-color);
+  --surface-tonal-bg-badge: var(--surface-tonal-bg);
+}
+
+:root[data-surface-button="outlined"] {
+  --surface-border-width-button: 1px;
+  --surface-border-color-button: var(--color-border);
+  --surface-tonal-bg-button: var(--color-surface);
+}
+
+:root[data-surface-button="flat"] {
+  --surface-border-width-button: 0px;
+  --surface-border-color-button: transparent;
+  --surface-tonal-bg-button: color-mix(in srgb, var(--color-secondary) 4%, var(--color-surface));
+}
+
+:root[data-surface-button="filled"] {
+  --surface-border-width-button: 0px;
+  --surface-border-color-button: transparent;
+  --surface-tonal-bg-button: color-mix(in srgb, var(--color-secondary) 12%, var(--color-surface));
+}
+
+:root[data-surface-card="outlined"] {
+  --surface-border-width-card: 1px;
+  --surface-border-color-card: var(--color-border);
+  --surface-tonal-bg-card: var(--color-surface);
+}
+
+:root[data-surface-card="flat"] {
+  --surface-border-width-card: 0px;
+  --surface-border-color-card: transparent;
+  --surface-tonal-bg-card: color-mix(in srgb, var(--color-secondary) 4%, var(--color-surface));
+}
+
+:root[data-surface-card="filled"] {
+  --surface-border-width-card: 0px;
+  --surface-border-color-card: transparent;
+  --surface-tonal-bg-card: color-mix(in srgb, var(--color-secondary) 12%, var(--color-surface));
+}
+
+:root[data-surface-input="outlined"] {
+  --surface-border-width-input: 1px;
+  --surface-border-color-input: var(--color-border);
+  --surface-tonal-bg-input: var(--color-surface);
+}
+
+:root[data-surface-input="flat"] {
+  --surface-border-width-input: 0px;
+  --surface-border-color-input: transparent;
+  --surface-tonal-bg-input: color-mix(in srgb, var(--color-secondary) 4%, var(--color-surface));
+}
+
+:root[data-surface-input="filled"] {
+  --surface-border-width-input: 0px;
+  --surface-border-color-input: transparent;
+  --surface-tonal-bg-input: color-mix(in srgb, var(--color-secondary) 12%, var(--color-surface));
+}
+
+:root[data-surface-dropdown="outlined"] {
+  --surface-border-width-dropdown: 1px;
+  --surface-border-color-dropdown: var(--color-border);
+  --surface-tonal-bg-dropdown: var(--color-surface);
+}
+
+:root[data-surface-dropdown="flat"] {
+  --surface-border-width-dropdown: 0px;
+  --surface-border-color-dropdown: transparent;
+  --surface-tonal-bg-dropdown: color-mix(in srgb, var(--color-secondary) 4%, var(--color-surface));
+}
+
+:root[data-surface-dropdown="filled"] {
+  --surface-border-width-dropdown: 0px;
+  --surface-border-color-dropdown: transparent;
+  --surface-tonal-bg-dropdown: color-mix(in srgb, var(--color-secondary) 12%, var(--color-surface));
+}
+
+:root[data-surface-modal="outlined"] {
+  --surface-border-width-modal: 1px;
+  --surface-border-color-modal: var(--color-border);
+  --surface-tonal-bg-modal: var(--color-surface);
+}
+
+:root[data-surface-modal="flat"] {
+  --surface-border-width-modal: 0px;
+  --surface-border-color-modal: transparent;
+  --surface-tonal-bg-modal: color-mix(in srgb, var(--color-secondary) 4%, var(--color-surface));
+}
+
+:root[data-surface-modal="filled"] {
+  --surface-border-width-modal: 0px;
+  --surface-border-color-modal: transparent;
+  --surface-tonal-bg-modal: color-mix(in srgb, var(--color-secondary) 12%, var(--color-surface));
+}
+
+:root[data-surface-badge="outlined"] {
+  --surface-border-width-badge: 1px;
+  --surface-border-color-badge: var(--color-border);
+  --surface-tonal-bg-badge: var(--color-surface);
+}
+
+:root[data-surface-badge="flat"] {
+  --surface-border-width-badge: 0px;
+  --surface-border-color-badge: transparent;
+  --surface-tonal-bg-badge: color-mix(in srgb, var(--color-secondary) 4%, var(--color-surface));
+}
+
+:root[data-surface-badge="filled"] {
+  --surface-border-width-badge: 0px;
+  --surface-border-color-badge: transparent;
+  --surface-tonal-bg-badge: color-mix(in srgb, var(--color-secondary) 12%, var(--color-surface));
+}

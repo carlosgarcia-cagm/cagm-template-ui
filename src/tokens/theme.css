@@ -4,20 +4,83 @@
   --color-accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
   --color-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 6%));
   --color-accent-active: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 12%));
-  --color-on-accent: var(--gray-50);
+  /*
+   * "On-color" = text placed directly on a solid fill of the base color.
+   * useTheme.ts picks near-white or near-black by WCAG contrast; the
+   * gray-50 fallback covers the pre-JS/SSR case.
+   */
+  --color-on-accent: var(--accent-on-light, var(--gray-50));
+
+  /*
+   * 9-step tonal scale (100..900). Hue/saturation are shared with the base
+   * color; only lightness varies (`--accent-<step>-l` is emitted by
+   * useTheme.ts, with fallbacks here so tokens resolve before JS runs).
+   * Step 500 is the reference shade; 100..300 are light backgrounds/tints,
+   * 600..900 are solid/text-safe shades.
+   */
+  --color-accent-100: hsl(var(--accent-h) var(--accent-s) var(--accent-100-l, 95%));
+  --color-accent-200: hsl(var(--accent-h) var(--accent-s) var(--accent-200-l, 88%));
+  --color-accent-300: hsl(var(--accent-h) var(--accent-s) var(--accent-300-l, 78%));
+  --color-accent-400: hsl(var(--accent-h) var(--accent-s) var(--accent-400-l, 65%));
+  --color-accent-500: hsl(var(--accent-h) var(--accent-s) var(--accent-500-l, 53%));
+  --color-accent-600: hsl(var(--accent-h) var(--accent-s) var(--accent-600-l, 45%));
+  --color-accent-700: hsl(var(--accent-h) var(--accent-s) var(--accent-700-l, 37%));
+  --color-accent-800: hsl(var(--accent-h) var(--accent-s) var(--accent-800-l, 29%));
+  --color-accent-900: hsl(var(--accent-h) var(--accent-s) var(--accent-900-l, 20%));
+  /*
+   * WCAG-AA-safe shade of the accent color for TEXT on neutral (or light
+   * tonal) surfaces — lands in the dark end of the scale in light mode;
+   * theme-dark.css swaps in a lighter step for dark surfaces.
+   */
+  --color-accent-text: hsl(var(--accent-h) var(--accent-s) var(--accent-text-light-l, 20%));
 
   --color-primary: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
   --color-primary-hover: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 6%));
   --color-primary-active: hsl(var(--primary-h) var(--primary-s) calc(var(--primary-l) - 12%));
-  --color-on-primary: var(--gray-50);
+  --color-on-primary: var(--primary-on-light, var(--gray-50));
+
+  /* Tonal scale for the primary color (see the accent block above). */
+  --color-primary-100: hsl(var(--primary-h) var(--primary-s) var(--primary-100-l, 95%));
+  --color-primary-200: hsl(var(--primary-h) var(--primary-s) var(--primary-200-l, 88%));
+  --color-primary-300: hsl(var(--primary-h) var(--primary-s) var(--primary-300-l, 78%));
+  --color-primary-400: hsl(var(--primary-h) var(--primary-s) var(--primary-400-l, 65%));
+  --color-primary-500: hsl(var(--primary-h) var(--primary-s) var(--primary-500-l, 53%));
+  --color-primary-600: hsl(var(--primary-h) var(--primary-s) var(--primary-600-l, 45%));
+  --color-primary-700: hsl(var(--primary-h) var(--primary-s) var(--primary-700-l, 37%));
+  --color-primary-800: hsl(var(--primary-h) var(--primary-s) var(--primary-800-l, 29%));
+  --color-primary-900: hsl(var(--primary-h) var(--primary-s) var(--primary-900-l, 20%));
+  --color-primary-text: hsl(var(--primary-h) var(--primary-s) var(--primary-text-light-l, 20%));
 
   --color-secondary: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-l));
   --color-secondary-hover: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) - 6%));
   --color-secondary-active: hsl(var(--secondary-h) var(--secondary-s) calc(var(--secondary-l) - 12%));
-  --color-on-secondary: var(--gray-50);
+  --color-on-secondary: var(--secondary-on-light, var(--gray-50));
+
+  /* Tonal scale for the secondary color (see the accent block above). */
+  --color-secondary-100: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-100-l, 95%));
+  --color-secondary-200: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-200-l, 88%));
+  --color-secondary-300: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-300-l, 78%));
+  --color-secondary-400: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-400-l, 65%));
+  --color-secondary-500: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-500-l, 53%));
+  --color-secondary-600: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-600-l, 45%));
+  --color-secondary-700: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-700-l, 37%));
+  --color-secondary-800: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-800-l, 29%));
+  --color-secondary-900: hsl(var(--secondary-h) var(--secondary-s) var(--secondary-900-l, 20%));
+  --color-secondary-text: hsl(
+    var(--secondary-h) var(--secondary-s) var(--secondary-text-light-l, 20%)
+  );
 
   --color-surface: var(--gray-50);
   --color-surface-raised: #ffffff;
+  /*
+   * --color-card-elevated: the "elevated hero/KPI card" surface. In light
+   * mode this matches --color-surface-raised (the conventional light
+   * elevation). The interesting split is in dark mode (see theme-dark.css),
+   * where --color-card-elevated is intentionally darker than the base
+   * surfaces for large dark hero cards, while --color-surface-raised stays
+   * lighter for small raised elements like badges and popovers.
+   */
+  --color-card-elevated: #ffffff;
   --color-border: var(--gray-200);
   --color-text: var(--gray-900);
   --color-text-muted: var(--gray-500);
@@ -32,8 +95,8 @@
    * [data-interaction] mode — unlike --state-layer-*, which resolves to
    * transparent in "glow".
    */
-  --color-selected-bg: color-mix(in srgb, var(--color-accent) 12%, transparent);
-  --color-selected-text: var(--color-accent);
+  --color-selected-bg: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  --color-selected-text: var(--color-primary);
 }
 
 html,

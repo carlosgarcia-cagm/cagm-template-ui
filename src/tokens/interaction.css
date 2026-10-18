@@ -12,10 +12,10 @@
 
 :root,
 :root[data-interaction="glow"] {
-  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--color-primary) 40%, transparent);
   /* Mouse-hover counterpart to --focus-ring: lighter/thinner so the two read as
    * distinct, and usable on :hover (focus-ring stays keyboard-only). */
-  --hover-ring: 0 0 0 2px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  --hover-ring: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
 
   --state-layer-hover: transparent;
   --state-layer-focus: transparent;
@@ -35,15 +35,15 @@
   /* Material relies on the internal state-layer fill, not an external ring. */
   --hover-ring: 0 0 0 0 transparent;
 
-  --state-layer-hover: color-mix(in srgb, var(--color-accent) 16%, transparent);
-  --state-layer-focus: color-mix(in srgb, var(--color-accent) 20%, transparent);
-  --state-layer-pressed: color-mix(in srgb, var(--color-accent) 24%, transparent);
-  --state-layer-dragged: color-mix(in srgb, var(--color-accent) 24%, transparent);
+  --state-layer-hover: color-mix(in srgb, var(--color-primary) 16%, transparent);
+  --state-layer-focus: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  --state-layer-pressed: color-mix(in srgb, var(--color-primary) 24%, transparent);
+  --state-layer-dragged: color-mix(in srgb, var(--color-primary) 24%, transparent);
 
   /* Always-visible mode indicator: saturated tinted fill. */
   --interaction-preview-bg: color-mix(in srgb, var(--color-accent) 45%, transparent);
 
   --ripple-duration: 450ms;
   --ripple-easing: cubic-bezier(0.4, 0, 0.2, 1);
-  --ripple-color: color-mix(in srgb, var(--color-accent) 24%, transparent);
+  --ripple-color: color-mix(in srgb, var(--color-primary) 24%, transparent);
 }

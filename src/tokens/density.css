@@ -1,10 +1,31 @@
+/*
+ * Density axis, toggled via [data-density] on :root:
+ * - "padded" (default, no attribute): roomier spacing.
+ * - "full-width": denser spacing for content-heavy layouts.
+ * Existing table tokens are kept as-is; the control/card/modal tokens below
+ * are additive and scale with the same axis so non-table components can opt
+ * into density too.
+ */
+
 :root,
 :root[data-density="padded"] {
   --table-cell-padding-x: 16px;
   --table-cell-padding-y: 12px;
+
+  --control-padding-y: 8px;
+  --control-padding-x: 12px;
+  --control-font-size: 14px;
+  --card-padding: 20px;
+  --modal-padding: 24px;
 }
 
 :root[data-density="full-width"] {
   --table-cell-padding-x: 4px;
   --table-cell-padding-y: 8px;
+
+  --control-padding-y: 6px;
+  --control-padding-x: 10px;
+  --control-font-size: 13px;
+  --card-padding: 16px;
+  --modal-padding: 20px;
 }

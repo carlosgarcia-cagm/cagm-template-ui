@@ -26,7 +26,14 @@
   --radius-raw-xl: 16px;
   --radius-raw-full: 999px;
 
+  /*
+   * z-index scale (low to high):
+   * dropdown(1000) < fab(1100) < modal(1300) < tooltip(1400) < toast(1500).
+   * The FAB is a floating action surface that must sit above page content and
+   * dropdowns but below modals, so it gets its own layer here.
+   */
   --z-dropdown: 1000;
+  --z-fab: 1100;
   --z-modal: 1300;
   --z-tooltip: 1400;
   --z-toast: 1500;

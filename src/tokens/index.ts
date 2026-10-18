@@ -3,6 +3,7 @@ import './theme.css'
 import './theme-dark.css'
 import './semantic-colors.css'
 import './shape.css'
+import './surface.css'
 import './elevation.css'
 import './density.css'
 import './interaction.css'
@@ -13,4 +14,6 @@ export const TOKEN_AXES = {
   shape: ['square', 'soft', 'rounded', 'pill'] as const,
   density: ['full-width', 'padded'] as const,
   interaction: ['glow', 'material'] as const,
+  surface: ['outlined', 'flat', 'filled'] as const,
+  elevation: ['subtle', 'standard', 'bold'] as const,
 }

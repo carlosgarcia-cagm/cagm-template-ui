@@ -4,6 +4,8 @@
   --radius-input: 8px;
   --radius-card: 10px;
   --radius-badge: 7px;
+  --radius-avatar: 999px;
+  --radius-modal: var(--radius-card);
 }
 
 :root[data-shape="square"] {
@@ -11,6 +13,8 @@
   --radius-input: 2px;
   --radius-card: 4px;
   --radius-badge: 2px;
+  --radius-avatar: 999px;
+  --radius-modal: var(--radius-card);
 }
 
 :root[data-shape="rounded"] {
@@ -18,6 +22,8 @@
   --radius-input: 12px;
   --radius-card: 16px;
   --radius-badge: 12px;
+  --radius-avatar: 999px;
+  --radius-modal: var(--radius-card);
 }
 
 :root[data-shape="pill"] {
@@ -25,4 +31,6 @@
   --radius-input: 999px;
   --radius-card: 999px;
   --radius-badge: 999px;
+  --radius-avatar: 999px;
+  --radius-modal: var(--radius-card);
 }
