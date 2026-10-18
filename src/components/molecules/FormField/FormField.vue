@@ -2,6 +2,7 @@
 import { useId } from 'vue'
 import { Label } from 'reka-ui'
 import Input from '@/components/atoms/Input'
+import type { InputType } from '@/components/atoms/Input/Input.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -9,7 +10,8 @@ const props = withDefaults(
     error?: string
     disabled?: boolean
     placeholder?: string
-    type?: 'text' | 'email' | 'password'
+    type?: InputType
+    required?: boolean
   }>(),
   {
     label: undefined,
@@ -17,6 +19,7 @@ const props = withDefaults(
     disabled: false,
     placeholder: '',
     type: 'text',
+    required: false,
   },
 )
 
@@ -26,7 +29,11 @@ const fieldId = useId()
 
 <template>
   <div class="cagm-form-field">
-    <Label v-if="label" class="cagm-form-field__label" :for="fieldId">
+    <!-- `#label` slot wins over the `label` prop when provided, so consumers
+         can render richer labels (icons, required marker, helper text) while
+         keeping the same `for`/`id` wiring via the default `<Label>` below. -->
+    <slot v-if="$slots.label" name="label" />
+    <Label v-else-if="label" class="cagm-form-field__label" :for="fieldId">
       {{ label }}
     </Label>
     <Input
@@ -35,8 +42,22 @@ const fieldId = useId()
       :type="type"
       :placeholder="placeholder"
       :disabled="disabled"
+      :required="required"
       :error="!!props.error"
-    />
+    >
+      <!-- Forward Input's `#leading` / `#trailing` slots so a consumer can
+           pass icon / action content (e.g. a password show/hide toggle,
+           search icon, clear button) without re-implementing the field. -->
+      <template #leading>
+        <slot name="leading" />
+      </template>
+      <template #trailing>
+        <slot name="trailing" />
+      </template>
+    </Input>
+    <p v-if="$slots.hint" class="cagm-form-field__hint">
+      <slot name="hint" />
+    </p>
     <p v-if="error" class="cagm-form-field__error">
       {{ error }}
     </p>
@@ -56,6 +77,13 @@ const fieldId = useId()
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--color-text);
+}
+
+.cagm-form-field__hint {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
 .cagm-form-field__error {

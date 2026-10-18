@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Card from '@/components/atoms/Card'
+
 withDefaults(
   defineProps<{
     title?: string
@@ -11,10 +13,21 @@ withDefaults(
 
 <template>
   <div class="auth-layout">
-    <div class="auth-layout__card">
-      <h1 v-if="title" class="auth-layout__title">{{ title }}</h1>
+    <Card variant="raised" padding="lg" class="auth-layout__card">
+      <template v-if="title" #title>
+        <h1 class="auth-layout__title">{{ title }}</h1>
+      </template>
+
+      <template v-if="$slots.subtitle" #subtitle>
+        <slot name="subtitle" />
+      </template>
+
       <slot />
-    </div>
+
+      <template v-if="$slots.footer" #footer>
+        <slot name="footer" />
+      </template>
+    </Card>
   </div>
 </template>
 
@@ -31,17 +44,13 @@ withDefaults(
 .auth-layout__card {
   width: 100%;
   max-width: 400px;
-  background: var(--color-surface-raised);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-md);
-  padding: 2rem;
 }
 
 .auth-layout__title {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 600;
-  margin: 0 0 1.5rem;
+  margin: 0;
   text-align: center;
 }
 </style>

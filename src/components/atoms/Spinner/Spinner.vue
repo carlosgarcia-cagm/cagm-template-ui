@@ -3,10 +3,13 @@ withDefaults(
   defineProps<{
     size?: number
     color?: string
+    /** Screen-reader label; override for i18n (default `"Loading"`). */
+    label?: string
   }>(),
   {
     size: 20,
     color: 'var(--color-accent)',
+    label: 'Loading',
   },
 )
 </script>
@@ -18,7 +21,7 @@ withDefaults(
     aria-live="polite"
     :style="{ width: `${size}px`, height: `${size}px`, '--spinner-color': color }"
   >
-    <span class="spinner__visually-hidden">Loading</span>
+    <span class="spinner__visually-hidden">{{ label }}</span>
   </span>
 </template>
 
@@ -47,6 +50,25 @@ withDefaults(
 @keyframes spinner-rotate {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Motion-sensitivity guard: stop the endless rotation and fall back to a
+ * gentle opacity pulse so the indicator still reads as "busy". */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: spinner-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes spinner-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
   }
 }
 </style>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useSlots } from 'vue'
 import { TabsRoot, TabsList, TabsTrigger, TabsContent } from 'reka-ui'
 
 export interface TabItem {
@@ -7,19 +8,31 @@ export interface TabItem {
   disabled?: boolean
 }
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     items: TabItem[]
     modelValue?: string
+    ariaLabel?: string
   }>(),
   {
     modelValue: undefined,
+    ariaLabel: 'Tabs',
   },
 )
 
 const emit = defineEmits<{
   'update:modelValue': [value: string]
 }>()
+
+const slots = useSlots()
+
+function triggerSlotName(value: string): string {
+  return `trigger-${value}`
+}
+
+function hasTriggerSlot(value: string): boolean {
+  return Boolean(slots[triggerSlotName(value)])
+}
 </script>
 
 <template>
@@ -28,7 +41,7 @@ const emit = defineEmits<{
     :model-value="modelValue"
     @update:model-value="(value) => emit('update:modelValue', String(value))"
   >
-    <TabsList class="cagm-tabs__list" aria-label="Tabs">
+    <TabsList class="cagm-tabs__list" :aria-label="ariaLabel">
       <TabsTrigger
         v-for="item in items"
         :key="item.value"
@@ -36,7 +49,18 @@ const emit = defineEmits<{
         :value="item.value"
         :disabled="item.disabled"
       >
-        {{ item.label }}
+        <!--
+         * Per-tab override slot. Lets a consumer render an icon, badge, or
+         * custom label without forking the molecule. The default content is
+         * the plain label, so existing call sites keep working unchanged.
+         -->
+        <slot
+          v-if="hasTriggerSlot(item.value)"
+          :name="triggerSlotName(item.value)"
+          :item="item"
+          :active="props.modelValue === item.value"
+        />
+        <template v-else>{{ item.label }}</template>
       </TabsTrigger>
     </TabsList>
     <TabsContent

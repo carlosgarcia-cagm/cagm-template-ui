@@ -8,10 +8,17 @@ const props = withDefaults(
   defineProps<{
     name?: string
     size?: number
+    /**
+     * Accessible name for a meaningful icon. When provided the icon is exposed
+     * as `role="img"` with this `aria-label`; when omitted the icon stays
+     * decorative (`aria-hidden="true"`).
+     */
+    label?: string
   }>(),
   {
     name: undefined,
     size: 20,
+    label: undefined,
   },
 )
 
@@ -20,10 +27,19 @@ const style = computed(() => ({
   height: `${props.size}px`,
   fontSize: `${props.size}px`,
 }))
+
+const isDecorative = computed(() => !props.label)
 </script>
 
 <template>
-  <span class="icon" :data-icon-name="name" :style="style">
+  <span
+    class="icon"
+    :data-icon-name="name"
+    :style="style"
+    :role="isDecorative ? undefined : 'img'"
+    :aria-label="label || undefined"
+    :aria-hidden="isDecorative ? 'true' : undefined"
+  >
     <slot />
   </span>
 </template>

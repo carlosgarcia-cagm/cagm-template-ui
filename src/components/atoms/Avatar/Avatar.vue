@@ -1,18 +1,27 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-type AvatarSize = 'sm' | 'md' | 'lg'
+export type AvatarSize = 'sm' | 'md' | 'lg'
 
 const props = withDefaults(
   defineProps<{
     src?: string
     name?: string
     size?: AvatarSize
+    /** When true, renders a focusable `<button>` instead of a non-interactive `<span>`. */
+    interactive?: boolean
+    /** Native button `type`; only applied in interactive mode. */
+    type?: 'button' | 'submit' | 'reset'
+    /** Disables the button; only applied in interactive mode. */
+    disabled?: boolean
   }>(),
   {
     src: undefined,
     name: '',
     size: 'md',
+    interactive: false,
+    type: 'button',
+    disabled: false,
   },
 )
 
@@ -24,37 +33,81 @@ const initials = computed(() => {
 })
 
 const showImage = computed(() => Boolean(props.src))
+const tag = computed(() => (props.interactive ? 'button' : 'span'))
 </script>
 
 <template>
-  <span class="avatar" :class="`avatar--${size}`" :title="name || undefined">
-    <img v-if="showImage" class="avatar__image" :src="src" :alt="name" />
-    <span v-else class="avatar__initials">{{ initials }}</span>
-  </span>
+  <component
+    :is="tag"
+    class="avatar"
+    :class="[`avatar--${size}`, { 'avatar--interactive': interactive }]"
+    :title="name || undefined"
+    :type="interactive ? type : undefined"
+    :disabled="interactive ? disabled : undefined"
+  >
+    <span class="avatar__frame">
+      <img v-if="showImage" class="avatar__image" :src="src" :alt="name" />
+      <slot v-else name="fallback">
+        <span class="avatar__initials">{{ initials }}</span>
+      </slot>
+    </span>
+    <span v-if="$slots.badge" class="avatar__badge">
+      <slot name="badge" />
+    </span>
+  </component>
 </template>
 
 <style scoped>
 .avatar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.avatar--interactive {
+  cursor: pointer;
+}
+
+.avatar--interactive:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.avatar__frame {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  /* Shape axis hook: falls back to a full circle until a global
+   * --radius-avatar is defined (e.g. by shape.css). */
+  border-radius: var(--radius-avatar, 999px);
   overflow: hidden;
   font-family: var(--font-body);
   font-weight: 600;
   color: var(--color-accent);
   background: color-mix(in srgb, var(--color-accent) 20%, var(--color-surface-raised));
-  user-select: none;
-  position: relative;
 }
 
 .avatar:focus-visible {
   outline: none;
+}
+
+.avatar:focus-visible .avatar__frame {
   box-shadow: var(--focus-ring);
 }
 
-.avatar::after {
+.avatar__frame::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -62,12 +115,24 @@ const showImage = computed(() => Boolean(props.src))
   pointer-events: none;
 }
 
-.avatar:hover::after {
+.avatar:hover .avatar__frame::after {
   background: var(--state-layer-hover);
 }
 
-.avatar:active::after {
+.avatar:active .avatar__frame::after {
   background: var(--state-layer-pressed);
+}
+
+/* Presence-indicator overlay: un-clipped by the frame so dots/pills can
+ * overlap the circle's edge. */
+.avatar__badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  line-height: 0;
 }
 
 .avatar--sm {
